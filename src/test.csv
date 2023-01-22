@@ -1,0 +1,40 @@
+,peak_f,bridge_freq_true,bridge_name,case_study,bridge_freq_detection
+0,10.0,6.5,short_span,Case_1,not detected
+1,1.9,1.9,med_span,Case_1,detected
+2,1.1,1.0,long_span,Case_1,detected
+3,13.6,7.1,med_thick,Case_1,not detected
+4,5.4,7.6,large_thick,Case_1,not detected
+5,4.9,5.3,low_num,Case_1,detected
+6,4.9,6.8,high_num,Case_1,not detected
+7,3.4,3.4,low_num_constant_flexure,Case_1,detected
+8,1.2,1.2,med_num_constant_flexure,Case_1,detected
+9,0.6,0.6,high_num_constant_flexure,Case_1,detected
+10,16.5,4.2,thin_constant_mass,Case_1,not detected
+11,3.2,3.2,med_thick_constant_mass,Case_1,detected
+12,2.5,2.5,large_thick_constant_mass,Case_1,detected
+52,10.3,10.3,short_span,Case_2,detected
+53,4.9,5.2,med_span,Case_2,detected
+54,2.9,2.9,long_span,Case_2,detected
+55,6.4,7.8,small_thick,Case_2,not detected
+56,12.5,10.3,med_thick,Case_2,not detected
+57,13.0,12.9,large_thick,Case_2,detected
+58,12.5,12.3,med_num,Case_2,detected
+59,12.7,13.2,high_num,Case_2,detected
+60,4.5,3.9,med_num_constant_flexure,Case_2,detected
+61,2.8,1.9,high_num_constant_flexure,Case_2,detected
+62,4.9,20.9,thin_constant_mass,Case_2,not detected
+63,4.4,6.0,med_thick_constant_mass,Case_2,not detected
+64,3.5,3.0,large_thick_constant_mass,Case_2,detected
+104,12.5,6.8,short_span,Case_3,not detected
+105,3.0,3.0,med_span,Case_3,detected
+106,9.5,1.7,long_span,Case_3,not detected
+107,3.5,2.4,med_thick,Case_3,not detected
+108,10.0,3.1,large_thick,Case_3,not detected
+109,13.0,1.7,low_num,Case_3,not detected
+110,2.1,2.1,high_num,Case_3,detected
+111,4.0,1.7,low_num_constant_flexure,Case_3,not detected
+112,2.2,1.8,med_num_constant_flexure,Case_3,detected
+113,1.1,1.6,high_num_constant_flexure,Case_3,detected
+114,12.1,12.1,thin_constant_mass,Case_3,detected
+115,6.1,5.3,med_thick_constant_mass,Case_3,detected
+116,2.8,2.8,large_thick_constant_mass,Case_3,detected

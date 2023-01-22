@@ -1,0 +1,17 @@
+workspace.code-workspace
+results/
+abaqus_data/
+src/python_functions/
+__pycache__/
+.vscode/
+src/abaqus/__init__.py
+src/mpl_test.py
+requirements.txt
+envs/
+test_matrix.xlsx
+cenvs/
+reports/
+parametric_studies/
+src/vmd/results.csv
+test_matrix_.xlsx
+APPVMD_algorithm.pptx
