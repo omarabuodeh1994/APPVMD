@@ -10,7 +10,7 @@ from itertools import product
 import time
 import functools
 
-def max_pow_spec_entr(data):
+def min_pow_spec_entr(data):
     """This function is used to compute the maximum power spectrum entropy of each decomposed signal.
 
     Args:
@@ -22,7 +22,7 @@ def max_pow_spec_entr(data):
     entr_vec = np.zeros(data.shape[0])
     for i in range(data.shape[0]): 
         entr_vec[i] = ant.spectral_entropy(data[i], sf=1000, method='welch', normalize=True)
-    return np.max(entr_vec)
+    return np.min(entr_vec)
 
 def max_cor_coef(data):
     """This function is used to compute the maximum correlation coefficient.
@@ -83,7 +83,7 @@ def fitness_VMD(x,sig_data,sig_params):
     vmd_sigs,_,cen_f_off = VMD(sig_data[:n_rows], alpha, tau, n_modes, 0, 1, 1e-6)
     sort_idx = np.argsort(cen_f_off[-1,:])
     vmd_sigs = vmd_sigs[sort_idx,:]
-    entropy_max = max_pow_spec_entr(vmd_sigs) # compute max power spectral entropy of decomposed signals
+    entropy_max = min_pow_spec_entr(vmd_sigs) # compute max power spectral entropy of decomposed signals
     n_overlaps = freq_overlapped(vmd_sigs,0.01,freq_res,fs,num_peaks)
     return (entropy_max+n_overlaps)/2.0 # return the maximum correlation coefficient and maximum entropy.
 
@@ -110,7 +110,7 @@ def fitness_VMD_par(alpha,n_modes,sig_data,sig_params):
     vmd_sigs,_,cen_f_off = VMD(sig_data[:n_rows], alpha, tau, n_modes, 0, 1, 1e-6)
     sort_idx = np.argsort(cen_f_off[-1,:])
     vmd_sigs = vmd_sigs[sort_idx,:]
-    entropy_max = max_pow_spec_entr(vmd_sigs) # compute max power spectral entropy of decomposed signals
+    entropy_max = min_pow_spec_entr(vmd_sigs) # compute minimum power spectral entropy of decomposed signals
     n_overlaps = freq_overlapped(vmd_sigs,0.01,freq_res,fs,num_peaks)
     return (entropy_max+n_overlaps)/2.0 # return the maximum correlation coefficient and maximum entropy.
 

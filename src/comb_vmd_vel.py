@@ -86,13 +86,31 @@ def get_flexural_idx_and_frequency(input_params):
         input_params ([object]): list of class object defined by the user in input_params.py (it contains bridge properties like L,I,M,E).
 
     Returns:
-        [[float],[float]]: returns a list of two lists where the first list is frequency values and the second is flexural indexes.
+        [df]: returns a dataframe containing frequency values and flexural indexes, respectively.
     """
+    # bridge properties:
     L = flatten([input_param.bridge_spans for input_param in input_params])
     I = flatten([input_param.bridge_Is for input_param in input_params])
     M = flatten([input_param.bridge_masses for input_param in input_params])
     E = flatten([input_param.bridge_Es for input_param in input_params])
-    return [round(round(np.pi/2*np.sqrt((E[idx]*10**9*I[idx])/(M[idx]*L[idx]**4))/input_params[0].freq_res)*input_params[0].freq_res,3) for idx in range(len(L))],[E[idx]*I[idx]/L[idx] for idx in range(len(L))]
+
+    # calculation:
+    bridge_comp_prop_df = pd.DataFrame()
+    # closed-form solutions to obtain natural frequencies of beam based on boundary condition type:
+        # frequency for pinned-pinned condition
+    if input_params[0].boundary_condition == 'pp':
+        bridge_comp_prop_df['bridge_freq_true'] = [round(round(np.pi/2*np.sqrt((E[idx]*10**9*I[idx])/(M[idx]*L[idx]**4))/0.1)*0.1,3) for idx in range(len(L))]
+    elif input_params[0].boundary_condition == 'ff':
+        # frequency for fixed-fixed condition
+        bridge_comp_prop_df['bridge_freq_true'] = [round(round((1.5**2*np.pi)/2*np.sqrt((E[idx]*10**9*I[idx])/(M[idx]*L[idx]**4))/0.1)*0.1,3) for idx in range(len(L))]
+    elif input_params[0].boundary_condition == 'fp':
+        # frequency for fixed-pinned condition
+        bridge_comp_prop_df['bridge_freq_true'] = [round(round((1.25**2*np.pi)/2*np.sqrt((E[idx]*10**9*I[idx])/(M[idx]*L[idx]**4))/0.1)*0.1,3) for idx in range(len(L))]
+    
+    # flexural index computation:
+    bridge_comp_prop_df['flexural_index'] = [E[idx]*I[idx]/L[idx] for idx in range(len(L))]
+
+    return bridge_comp_prop_df
 
 def compute_drive_freq(vel,dist,freq_res):
     return round(round(vel/dist/freq_res)*freq_res,3)
@@ -294,7 +312,7 @@ def get_bridge_df(list_input_params,flexural_index,frequency):
                                 'span':flatten([input_params.bridge_spans for input_params in list_input_params]),
                                 'E': flatten([input_params.bridge_Es for input_params in list_input_params]),
                                 'I': flatten([input_params.bridge_Is for input_params in list_input_params]),
-                                'flexural_index': flexural_index, 'bridge_freq_true': frequency,
+                                'flexural_index': flexural_index, f'bridge_freq_true': frequency,
                                 'bridge_name': flatten([input_params.bridge_names for input_params in list_input_params]),
                                 'case_study': flatten([[input_params.case_study]*len(input_params.bridge_names) for input_params in list_input_params])})
 
@@ -361,7 +379,7 @@ class LoadInputs:
         # case studies of interest
         self.case_studies = [f'Case_{i}' for i in range(1,4)]
         # type of study:
-        self.type_of_study = 'mult_veh'
+        self.type_of_study = 'tire_stiffness'
     
     def get_inputs_dir(self):
         list_inputs, list_dir = [],[]
@@ -379,8 +397,11 @@ if __name__ == '__main__':
     # create dataframe for vehicles:
     veh_df = pd.DataFrame({'veh_class':list_inputs[0].veh_classes,'veh_mass':list_inputs[0].veh_masses})
     # get frequency and flexural index values for each bridge:
-    frequency,flexural_index = get_flexural_idx_and_frequency(list_inputs)
+    bridge_comp_prop_df = get_flexural_idx_and_frequency(list_inputs)
     
+    # store frequency and flexural index vectors:
+    frequency,flexural_index = bridge_comp_prop_df['bridge_freq_true'].to_numpy(),bridge_comp_prop_df['flexural_index'].to_numpy()
+
     # convert frequency vector to df:
     bridge_freq_df = pd.DataFrame({'peak_f':frequency})
 
@@ -407,7 +428,7 @@ if __name__ == '__main__':
     
     # map with bridge frequencies based on the Euler beam frequency equation:
     dom_freq_df = map_with_true_bridge_freq(merge_vmd_df,list_inputs) # according to the exact frequency
-    
+
     # create column specifying whether bridge is detected or not:
     dom_freq_df = get_bridge_detection(dom_freq_df,1) # according to the exact frequency
     dom_count_binned_df = get_bridge_detection(dom_count_binned_df,1) # according to binned frequency
@@ -451,11 +472,11 @@ if __name__ == '__main__':
     # print(df_counts_binned)
     
     # get statistics summary of dataframes:
-    fig_act_vs_pred, axs_act_vs_pred, stat_df = get_statistics(list_inputs[0].plot_format,list_inputs[0].veh_classes,list_inputs[0].vel,dom_freq_df,'bridge_freq_true','peak_f','veh_class','Hz')
+    fig_act_vs_pred, axs_act_vs_pred, stat_df = get_statistics(list_inputs[0].plot_format,list_inputs[0].veh_classes,list_inputs[0].vel,dom_freq_df,f'bridge_freq_true','peak_f','veh_class','Hz')
     print(stat_df)
-
-    fig_act_vs_pred_binned, axs_act_vs_pred_binned, stat_df_binned = get_statistics(list_inputs[0].plot_format,list_inputs[0].veh_classes,list_inputs[0].vel,dom_count_binned_df,'bridge_freq_true','peak_f','veh_class','Hz')
-    print(stat_df_binned)
+    pdb.set_trace()
+    # fig_act_vs_pred_binned, axs_act_vs_pred_binned, stat_df_binned = get_statistics(list_inputs[0].plot_format,list_inputs[0].veh_classes,list_inputs[0].vel,dom_count_binned_df,'bridge_freq_true','peak_f','veh_class','Hz')
+    # print(stat_df_binned)
     # save_figs(fig_act_vs_pred,'./results/sedan_velocity',['sedan_9','sedan_13.4','sedan_17.9','sedan_22.4'])
     # plot relational plots of dataframe:
     with sns.plotting_context(list_inputs[0].plot_format):

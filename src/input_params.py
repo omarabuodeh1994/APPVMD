@@ -20,9 +20,9 @@ class InputParams:
         elif case_study == 'Case_1': # bridge class from "Using drive-by health monitoring to detect bridge damage considering environmental and operational effects"
             self.bridge_spans = [16.,30.,40.,16.,16.,16.,16.,16.,16.,20.,38.,56.,20.,24.,28.] 
         elif case_study == 'Case_2': # bridge class from "Fatigue analysis and life prediction of composite highway bridge decks under traffic loading"
-            self.bridge_spans =  [21.3,30.,40.,21.3,21.3,21.3,21.3,21.3,21.3,20.,38.,56.,13.,28.,44.]
-        else: # bridge class from "Drive-by health monitoring of highway bridges usingBayesian estimation technique for damage classification"
             self.bridge_spans =  [20.,30.,40.,40.,40.,40.,40.,40.,40.,40.,44.,46.,15.,27.,42.]
+        else: # bridge class from "Drive-by health monitoring of highway bridges usingBayesian estimation technique for damage classification"
+            self.bridge_spans =  [21.3,30.,40.,21.3,21.3,21.3,21.3,21.3,21.3,20.,38.,56.,13.,28.,44.]
         
         # bridge case studies to specify bridge masses in kg/m:
         if case_study == 'Case_0':
@@ -63,6 +63,8 @@ class InputParams:
         else:
             self.bridge_names = ['med_thick'] # arbitrary bridge name for a single bridge class
         
+    # bridge boundary condition:
+        self.boundary_condition = 'ff' # ff = fixed-fixed; pp = pinned-pinned; fp = fixed-pinned
     # span type boundaries:
         self.bridge_bounds = [20,30]
 
