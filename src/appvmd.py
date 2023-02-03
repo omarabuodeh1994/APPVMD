@@ -101,26 +101,26 @@ class APPVMD:
 
         # # Decompose signals:
         dec_sig_off,dec_sig_on = [],[]
-        # for i in range(num_sensors):
-        #     dec_sig_off.append(dec_vmd(filt_sig_off[:,i],opt_alpha_off[i],0,opt_mode_off[i]))
-        #     dec_sig_on.append(dec_vmd(filt_sig_on[:,i],opt_alpha_on[i],0,opt_mode_on[i]))
+        for i in range(num_sensors):
+            dec_sig_off.append(dec_vmd(filt_sig_off[:,i],opt_alpha_off[i],0,opt_mode_off[i]))
+            dec_sig_on.append(dec_vmd(filt_sig_on[:,i],opt_alpha_on[i],0,opt_mode_on[i]))
         
-        df_dec_off = pd.read_csv(dir_project.dir + veh_class + '/' + bridge_name + dir_project.vmd_sigs_dir[dir_idx] +'/dec_sigs_off_' + str(pass_num) + '.csv')
-        df_dec_on = pd.read_csv(dir_project.dir + veh_class + '/' + bridge_name + dir_project.vmd_sigs_dir[dir_idx] +'/dec_sigs_on_' + str(pass_num) + '.csv')
-        for sens_idx,sensor_name in enumerate(input_params.sensor_names):
-            arr_off = np.zeros((4,sig_len_off))
-            arr_on = np.zeros((4,sig_len_on))
-            for mode_idx,mode_num in enumerate([f'mode_{i}' for i in range(1,5)]):
-                arr_off[mode_idx,:] = df_dec_off[(df_dec_off['mode_num'] == mode_num) & (df_dec_off['sensor'] == sensor_name)]['acc'].to_numpy()
-                arr_on[mode_idx,:] = df_dec_on[(df_dec_on['mode_num'] == mode_num) & (df_dec_on['sensor'] == sensor_name)]['acc'].to_numpy()
-            dec_sig_off.append(arr_off)
-            dec_sig_on.append(arr_on)
+        # df_dec_off = pd.read_csv(dir_project.dir + veh_class + '/' + bridge_name + dir_project.vmd_sigs_dir[dir_idx] +'/dec_sigs_off_' + str(pass_num) + '.csv')
+        # df_dec_on = pd.read_csv(dir_project.dir + veh_class + '/' + bridge_name + dir_project.vmd_sigs_dir[dir_idx] +'/dec_sigs_on_' + str(pass_num) + '.csv')
+        # for sens_idx,sensor_name in enumerate(input_params.sensor_names):
+        #     arr_off = np.zeros((4,sig_len_off))
+        #     arr_on = np.zeros((4,sig_len_on))
+        #     for mode_idx,mode_num in enumerate([f'mode_{i}' for i in range(1,5)]):
+        #         arr_off[mode_idx,:] = df_dec_off[(df_dec_off['mode_num'] == mode_num) & (df_dec_off['sensor'] == sensor_name)]['acc'].to_numpy()
+        #         arr_on[mode_idx,:] = df_dec_on[(df_dec_on['mode_num'] == mode_num) & (df_dec_on['sensor'] == sensor_name)]['acc'].to_numpy()
+        #     dec_sig_off.append(arr_off)
+        #     dec_sig_on.append(arr_on)
         # save list of decomposed signals into separate dfs:
-        # df_dec_off = list_to_df(dec_sig_off,input_params.sensor_names)
-        # df_dec_off.to_csv(dir_project.dir + veh_class + '/' + bridge_name + dir_project.vmd_sigs_dir[dir_idx] +'/dec_sigs_off_' + str(pass_num) + '.csv', index=False)
+        df_dec_off = list_to_df(dec_sig_off,input_params.sensor_names)
+        df_dec_off.to_csv(dir_project.dir + veh_class + '/' + bridge_name + dir_project.vmd_sigs_dir[dir_idx] +'/dec_sigs_off_' + str(pass_num) + '.csv', index=False)
 
-        # df_dec_on = list_to_df(dec_sig_on,input_params.sensor_names)
-        # df_dec_on.to_csv(dir_project.dir + veh_class + '/' +bridge_name + dir_project.vmd_sigs_dir[dir_idx] +'/dec_sigs_on_' + str(pass_num) + '.csv', index=False)
+        df_dec_on = list_to_df(dec_sig_on,input_params.sensor_names)
+        df_dec_on.to_csv(dir_project.dir + veh_class + '/' +bridge_name + dir_project.vmd_sigs_dir[dir_idx] +'/dec_sigs_on_' + str(pass_num) + '.csv', index=False)
         
         ## Debug
         # for dec_sig_on_arr in dec_sig_on:
