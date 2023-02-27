@@ -64,7 +64,7 @@ class InputParams:
             self.bridge_names = ['med_thick'] # arbitrary bridge name for a single bridge class
         
     # bridge boundary condition:
-        self.boundary_condition = 'ff' # ff = fixed-fixed; pp = pinned-pinned; fp = fixed-pinned
+        self.boundary_condition = 'pp' # ff = fixed-fixed; pp = pinned-pinned; fp = fixed-pinned
     # span type boundaries:
         self.bridge_bounds = [20,30]
 
