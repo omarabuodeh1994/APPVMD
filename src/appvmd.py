@@ -87,10 +87,10 @@ class APPVMD:
 
         # loop through each sensors and obtain vmd parameters using get_opt_vmd_params()
         for sens in range(num_sensors):
-            opt_mode_temp, opt_alpha_temp = get_opt_vmd_params (filt_sig_off[:,sens],[100,2000],[4,7],sig_params_opt)
+            opt_mode_temp, opt_alpha_temp = get_opt_vmd_params (filt_sig_off[:,sens],[1000,2000],[input_params.num_modes,input_params.num_modes+3],sig_params_opt)
             opt_mode_off.append(opt_mode_temp)
             opt_alpha_off.append(opt_alpha_temp)
-            opt_mode_temp, opt_alpha_temp = get_opt_vmd_params (filt_sig_on[:,sens],[100,2000],[4,7],sig_params_opt)
+            opt_mode_temp, opt_alpha_temp = get_opt_vmd_params (filt_sig_on[:,sens],[1000,2000],[input_params.num_modes,input_params.num_modes+3],sig_params_opt)
             opt_mode_on.append(opt_mode_temp)
             opt_alpha_on.append(opt_alpha_temp)
         

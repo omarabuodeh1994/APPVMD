@@ -9,7 +9,7 @@ src/mpl_test.py
 requirements.txt
 envs/
 test_matrix.xlsx
-cenvs/
+/cenvs/
 reports/
 parametric_studies/
 src/vmd/results.csv

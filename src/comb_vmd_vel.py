@@ -379,7 +379,7 @@ class LoadInputs:
         # case studies of interest
         self.case_studies = [f'Case_{i}' for i in range(1,4)]
         # type of study:
-        self.type_of_study = 'tire_stiffness'
+        self.type_of_study = 'mult_veh'
     
     def get_inputs_dir(self):
         list_inputs, list_dir = [],[]

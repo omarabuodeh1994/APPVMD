@@ -64,7 +64,7 @@ class InputParams:
             self.bridge_names = ['med_thick'] # arbitrary bridge name for a single bridge class
         
     # bridge boundary condition:
-        self.boundary_condition = 'ff' # ff = fixed-fixed; pp = pinned-pinned; fp = fixed-pinned
+        self.boundary_condition = 'pp' # ff = fixed-fixed; pp = pinned-pinned; fp = fixed-pinned
     # span type boundaries:
         self.bridge_bounds = [20,30]
 
@@ -82,7 +82,7 @@ class InputParams:
     # peak picking input parameters:
         self.bin_width = 0.5 # frequency bin width in Hz
         self.num_peaks = 10 # number of peaks to pick 
-        self.num_modes = 4 # number of modes to pick from
+        self.num_modes = 7 # number of modes to pick from
         
     # vehicle input parameters:
         self.num_passes = 10 # number of time vehicle drives across bridge
